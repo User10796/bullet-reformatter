@@ -78,7 +78,13 @@ export default function Home() {
               id="input"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Paste your bullet points here..."
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                  e.preventDefault()
+                  handleReformat()
+                }
+              }}
+              placeholder="Paste your bullet points here... (Press Enter to submit, Shift+Enter for new line)"
               className="w-full h-80 p-4 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none text-gray-900"
             />
           </div>
