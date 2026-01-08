@@ -62,10 +62,10 @@ export default function Home() {
     <main className="min-h-screen bg-gray-50 py-8 px-4">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-3xl font-bold text-gray-900 mb-2 text-center">
-          Bullet Point Reformatter
+          Note Attestation Tool
         </h1>
         <p className="text-gray-600 text-center mb-8">
-          Paste your medical notes and get them reformatted automatically
+          Reformatting tool for note attestations
         </p>
 
         <div className="grid md:grid-cols-2 gap-6">
@@ -152,18 +152,6 @@ export default function Home() {
           >
             Clear
           </button>
-        </div>
-
-        {/* Instructions */}
-        <div className="mt-8 p-4 bg-blue-50 rounded-lg">
-          <h2 className="font-medium text-blue-900 mb-2">What this tool does:</h2>
-          <ul className="text-sm text-blue-800 space-y-1">
-            <li>- Removes references to Dr. Haring</li>
-            <li>- Combines medications to continue into a single bullet</li>
-            <li>- Separates medication changes into individual bullets</li>
-            <li>- Separates procedures into individual bullets</li>
-            <li>- Rewords for clarity while preserving meaning</li>
-          </ul>
         </div>
       </div>
     </main>

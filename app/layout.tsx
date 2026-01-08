@@ -5,8 +5,8 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Bullet Point Reformatter',
-  description: 'Reformat medical bullet points with AI',
+  title: 'Note Attestation Tool',
+  description: 'Reformatting tool for note attestations',
 }
 
 export default function RootLayout({
