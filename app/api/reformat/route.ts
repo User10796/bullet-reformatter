@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
     }
 
     const message = await client.messages.create({
-      model: 'claude-sonnet-4-20250514',
+      model: 'claude-3-5-sonnet-20241022',
       max_tokens: 2048,
       system: SYSTEM_PROMPT,
       messages: [
@@ -63,8 +63,9 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ result: content.text })
   } catch (error) {
     console.error('Error calling Claude API:', error)
+    const message = error instanceof Error ? error.message : 'Unknown error'
     return NextResponse.json(
-      { error: 'Failed to process text' },
+      { error: `Failed to process text: ${message}` },
       { status: 500 }
     )
   }
