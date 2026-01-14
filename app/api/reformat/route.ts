@@ -13,11 +13,12 @@ RULE 2: If any medications say "continue" in the input, combine them into ONE bu
 - Continue: [med1], [med2], [med3]
 Do NOT list continued medications as "med changes" - they are NOT changes.
 
-RULE 3: "Med changes:" bullet is ONLY for:
-- NEW medications (words like "start", "begin", "new")
-- STOPPED medications (words like "stop", "discontinue", "d/c")
-- DOSE CHANGES (words like "increase", "decrease", "change to")
-If none of these exist in the input, do NOT include a Med changes bullet at all.
+RULE 3: Medication changes (ONLY if there are new/stopped/changed meds in input):
+Format each change as its own bullet:
+- Start [medication name, dose, frequency]
+- Stop [medication name]
+- Change [medication name] to [new dose/frequency]
+If no medications are being started, stopped, or changed, do NOT include any med change bullets.
 
 RULE 4: Each procedure gets its own bullet (injections, blocks, imaging scheduled, etc.)
 
@@ -75,12 +76,13 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Post-process: remove preamble text and blank lines
+    // Post-process: remove preamble text, blank lines, and standalone headers
     const cleanedText = content.text
       .replace(/^(Here is|Here's|Below is|The following is).*?:\s*/gi, '')
       .split('\n')
       .filter(line => line.trim() !== '')
       .filter(line => !line.match(/^(Here is|Here's|Below is|The following is)/i))
+      .filter(line => !line.match(/^-?\s*(Med changes|Medication changes):?\s*$/i))
       .join('\n')
     return NextResponse.json({ result: cleanedText })
   } catch (error) {
