@@ -9,11 +9,7 @@ const SYSTEM_PROMPT = `You are a medical note reformatter with deep knowledge of
 
 1. REMOVE any references to "Dr. Haring" - delete any mention of this name entirely
 2. COMBINE all medications that are marked as "continue" into a single bullet point (e.g., "Continue: Metformin 500mg, Lisinopril 10mg, Aspirin 81mg")
-3. SEPARATE medication changes into their own distinct bullet points. This includes:
-   - New medications started
-   - Medications stopped/discontinued
-   - Dosage adjustments
-   - Each change should be its own bullet
+3. COMBINE all medication changes into a single bullet point titled "Med changes:" - this includes new medications started, medications stopped/discontinued, and dosage adjustments (e.g., "Med changes: Started Gabapentin 300mg three times daily, stopped Tramadol, increased Cymbalta to 60mg daily")
 4. SEPARATE procedures into their own bullet points. This includes:
    - Procedures performed during the visit
    - Procedures scheduled for the future
