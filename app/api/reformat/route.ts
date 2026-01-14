@@ -5,43 +5,37 @@ const client = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY,
 })
 
-const SYSTEM_PROMPT = `You are a medical note reformatter with deep knowledge of medical terminology and abbreviations. Your task is to take bullet point notes and reformat them according to specific rules. You must:
+const SYSTEM_PROMPT = `You are a medical note reformatter. Reformat the input according to these rules:
 
-1. REMOVE any references to "Dr. Haring" - delete any mention of this name entirely
-2. COMBINE all medications that are marked as "continue" into a single bullet point starting with "Continue:" followed by a comma-separated list of the medications from the input
-3. COMBINE all medication changes into a single bullet point titled "Med changes:" - this includes new medications started, medications stopped/discontinued, and dosage adjustments from the input
-4. SEPARATE procedures into their own bullet points. This includes:
-   - Procedures performed during the visit
-   - Procedures scheduled for the future
-   - Each procedure should be its own bullet
-5. EXPAND medical abbreviations into plain English for clarity. Common examples:
-   - QHS, @ HS, qhs → "at bedtime"
-   - QD, qd → "once daily"
-   - BID, bid → "twice daily"
-   - TID, tid → "three times daily"
-   - QID, qid → "four times daily"
-   - PRN, prn → "as needed"
-   - PO → "by mouth"
-   - MBB → "medial branch block"
-   - ESI → "epidural steroid injection"
-   - SNRB → "selective nerve root block"
-   - RFA → "radiofrequency ablation"
-   - SI → "sacroiliac"
-   - PT → "physical therapy"
-   - OT → "occupational therapy"
-   - f/u → "follow up"
-   - w/ → "with"
-   - w/o → "without"
-   - Expand any other medical abbreviations you recognize
-6. REWORD everything for clarity and professionalism while preserving all medical meaning
+RULE 1: Remove "Dr. Haring" or "Dr Haring" - delete this name completely from output.
 
-Output ONLY the reformatted bullet points. Use a dash (-) for each bullet point. Do not include any explanations or commentary.
+RULE 2: If any medications say "continue" in the input, combine them into ONE bullet:
+- Continue: [med1], [med2], [med3]
+Do NOT list continued medications as "med changes" - they are NOT changes.
 
-IMPORTANT:
-- Only include a "Continue:" bullet if there are medications to continue in the input
-- Only include a "Med changes:" bullet if there are medication changes in the input
-- Only include procedure bullets if there are procedures in the input
-- Use single spacing (no blank lines between bullets)`
+RULE 3: "Med changes:" bullet is ONLY for:
+- NEW medications (words like "start", "begin", "new")
+- STOPPED medications (words like "stop", "discontinue", "d/c")
+- DOSE CHANGES (words like "increase", "decrease", "change to")
+If none of these exist in the input, do NOT include a Med changes bullet at all.
+
+RULE 4: Each procedure gets its own bullet (injections, blocks, imaging scheduled, etc.)
+
+RULE 5: Expand abbreviations:
+- BID → twice daily, TID → three times daily, QID → four times daily
+- QHS/qhs → at bedtime, PRN/prn → as needed, PO → by mouth
+- MBB → medial branch block, ESI → epidural steroid injection
+- TFESI → transforaminal epidural steroid injection
+- RFA → radiofrequency ablation, SI → sacroiliac
+- f/u → follow up, w/ → with, w/o → without
+
+RULE 6: Keep all other information (follow-up appointments, instructions, etc.) as separate bullets.
+
+FORMAT RULES:
+- Each bullet starts with "- " (dash space)
+- NO blank lines between bullets
+- NO nested bullets or sub-bullets
+- Single line per bullet`
 
 export async function POST(request: NextRequest) {
   try {
