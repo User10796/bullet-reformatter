@@ -75,7 +75,12 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    return NextResponse.json({ result: content.text })
+    // Remove any blank lines from output
+    const cleanedText = content.text
+      .split('\n')
+      .filter(line => line.trim() !== '')
+      .join('\n')
+    return NextResponse.json({ result: cleanedText })
   } catch (error) {
     console.error('Error calling Claude API:', error)
     const message = error instanceof Error ? error.message : 'Unknown error'
