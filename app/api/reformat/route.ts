@@ -35,7 +35,13 @@ const SYSTEM_PROMPT = `You are a medical note reformatter with deep knowledge of
    - Expand any other medical abbreviations you recognize
 6. REWORD everything for clarity and professionalism while preserving all medical meaning
 
-Output ONLY the reformatted bullet points. Use a dash (-) for each bullet point. Do not include any explanations or commentary.`
+Output ONLY the reformatted bullet points. Use a dash (-) for each bullet point. Do not include any explanations or commentary.
+
+IMPORTANT:
+- Only include a "Continue:" bullet if there are medications to continue in the input
+- Only include a "Med changes:" bullet if there are medication changes in the input
+- Only include procedure bullets if there are procedures in the input
+- Use single spacing (no blank lines between bullets)`
 
 export async function POST(request: NextRequest) {
   try {
