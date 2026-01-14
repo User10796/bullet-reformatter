@@ -75,10 +75,12 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Remove any blank lines from output
+    // Post-process: remove preamble text and blank lines
     const cleanedText = content.text
+      .replace(/^(Here is|Here's|Below is|The following is).*?:\s*/gi, '')
       .split('\n')
       .filter(line => line.trim() !== '')
+      .filter(line => !line.match(/^(Here is|Here's|Below is|The following is)/i))
       .join('\n')
     return NextResponse.json({ result: cleanedText })
   } catch (error) {
