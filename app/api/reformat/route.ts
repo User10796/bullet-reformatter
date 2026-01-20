@@ -20,7 +20,11 @@ Format each change as its own bullet:
 - Change [medication name] to [new dose/frequency]
 If no medications are being started, stopped, or changed, do NOT include any med change bullets.
 
-RULE 4: Each procedure gets its own bullet (injections, blocks, imaging scheduled, etc.)
+RULE 4: "Consider" items - keep the word "Consider" and list as separate bullets:
+- Consider [procedure/treatment]
+Do NOT convert "Consider" to "Start" - these are recommendations, not orders.
+
+RULE 5: Each procedure gets its own bullet (injections, blocks, imaging scheduled, etc.)
 
 RULE 5: Expand abbreviations:
 - BID → twice daily, TID → three times daily, QID → four times daily
